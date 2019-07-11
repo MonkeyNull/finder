@@ -1,0 +1,76 @@
+server:
+  port: 16000
+
+
+logging:
+  level:
+    root: info
+    jdbc:
+      connection: fatal
+      audit: fatal
+      sqlonly: fatal
+      resultset: fatal
+      resultsettable: info
+    com:
+      monkey:
+        finder:
+          find: debug
+  file: ../log/find.log
+
+mybatis:
+  typeAliasesPackage: com.monkey.finder.find.entity
+  mapperLocations: classpath:mybatis/find/*.xml
+
+
+spring:
+  datasource:
+    url: jdbc:log4jdbc:mysql://localhost:3306/find?userSSL=true&serverTimezone=GMT&useUnicode=true&characterEncoding=utf-8&noAccessToProcedureBodies=true&zeroDateTimeBehavior=round&allowMultiQueries=true
+#    url: jdbc:log4jdbc:mysql://62.234.6.224:3306/find?userSSL=true&serverTimezone=GMT&useUnicode=true&characterEncoding=utf-8&noAccessToProcedureBodies=true&zeroDateTimeBehavior=round&allowMultiQueries=true
+    driver-class-name: net.sf.log4jdbc.DriverSpy
+    username: root
+    password: root
+    type: org.apache.commons.dbcp2.BasicDataSource
+    dbcp2:
+      initial-size: 5 #初始化连接:连接池启动时创建的初始化连接数量
+      max-active: 5 #最大活动连接:连接池在同一时间能够分配的最大活动连接的数量, 如果设置为非正数则表示不限制
+      max-idle: 5 #最大空闲连接:连接池中容许保持空闲状态的最大连接数量,超过的空闲连接将被释放,如果设置为负数表示不限制
+      min-idle: 5  #最小空闲连接:连接池中容许保持空闲状态的最小连接数量,低于这个数量将创建新的连接,如果设置为0则不创建
+      max-wait-millis: 10000  #最大等待时间:当没有可用连接时,连接池等待连接被归还的最大时间(以毫秒计数),超过时间则抛出异常,如果设置为-1表示无限等待
+      validation-query: SELECT 1  #SQL查询,用来验证从连接池取出的连接,在将连接返回给调用者之前.如果指定,则查询必须是一个SQL SELECT并且必须返回至少一行记录
+      connection-properties: characterEncoding=utf8  #当建立新连接时被发送给JDBC驱动的连接参数，格式必须是 [propertyName=property;]。注意：参数user/password将被明确传递，所以不需要包括在这里。
+  mvc:
+#    默认请求的前缀。每个http请求都会被加上这个前缀
+    static-path-pattern: /**
+  resources:
+#    静态文件存放的地址。如果是图片的话就可以通过http请求去获取资源
+    static-locations: file:D://finder//
+  redis:
+    database: 3 #Redis数据库索引（默认为0）,如果设置为1，那么存入的key-value都存放在select 1中
+    host: 127.0.0.1
+    port: 6379
+    password: zhang1119 #Redis服务器连接密码（默认为空）
+    timeout: 10000 #连接超时时间（毫秒）
+  mail:
+    host: smtp.qq.com
+    username: 995373154@qq.com
+    password: htmkxflekviybchj #授权码
+    default-encoding: utf-8
+
+finder:
+##暂时用观道的
+#  app-id: 1018
+#  app-key: FjmoLYjMxV98gTapYyW5Fj9HTMPmVveN
+#  channel-id: 1005
+#  access_token_url: https://mini.guandao.vip/wxmp/token
+#  wx:
+#    app-id: wx8a9ccf4610c1be2f
+#    app-key: 54371dbe69c3604f1d90b879f23cdecd
+#  account:
+#    base-url: http://test.gw.leuok.com/
+#  pre_dev:
+#    uid: 1119
+  upload:
+    base-image-path: D://finder//img
+
+
+

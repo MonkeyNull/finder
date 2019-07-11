@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 引入配置文件 -->
+    <properties resource="generation/config.properties"/>
+    <!-- 数据库驱动包位置 -->
+    <!--<classPathEntry  location="/Users/Zero/.m2/repository/mysql/mysql-connector-java/5.1.34/mysql-connector-java-5.1.34.jar"/>-->
+    <context id="tables" targetRuntime="MyBatis3" defaultModelType="flat">
+        <property name="javaFileEncoding" value="UTF-8" />
+
+        <!-- SwaggerPlugin,DateTimeFormatPlugin,JsonFormatPlugin对日期时间字段格式化使用 -->
+        <property name="timestampFormat" value="yyyy-MM-dd HH:mm:ss"/>
+        <property name="dateFormat" value="yyyy-MM-dd"/>
+        <property name="timeFormat" value="HH:mm:ss"/>
+
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+        <!--<plugin type="org.mybatis.generator.plugins.SelectAllPlugin" />-->
+        <!--<plugin type="org.mybatis.generator.plugins.DaoAnnotationPlugin" />-->
+        <!--<plugin type="org.mybatis.generator.plugins.SwaggerPlugin" />-->
+        <!--<plugin type="org.mybatis.generator.plugins.DateTimeFormatPlugin" />-->
+        <!--<plugin type="org.mybatis.generator.plugins.JsonFormatPlugin" />-->
+        <!--<plugin type="org.mybatis.generator.plugins.ServicePlugin">-->
+            <!--<property name="basePackage" value="${package.base}" />-->
+            <!--<property name="targetPackage" value="${package.base}.service" />-->
+            <!--<property name="targetProject" value="${targetProject.java}" />-->
+        <!--</plugin>-->
+        <!--<plugin type="org.mybatis.generator.plugins.MyRenamePlugin" >-->
+            <!--<property name="searchString" value="ByPrimaryKey" />-->
+            <!--<property name="replaceString" value="" />-->
+        <!--</plugin>-->
+        <!-- 注释 -->
+        <!--<commentGenerator type="org.mybatis.generator.internal.GameleyCommentGenerator">-->
+        <!-- 自动为entity生成swagger2文档-->
+        <plugin type="mybatis.generator.plugins.GeneratorSwagger2Doc">
+            <property name="apiModelAnnotationPackage" value="io.swagger.annotations.ApiModel" />
+            <property name="apiModelPropertyAnnotationPackage" value="io.swagger.annotations.ApiModelProperty" />
+        </plugin>
+        <commentGenerator>
+            <!-- 是否生成注释代时间戳-->
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="false"/>
+            <!-- 是否生成remark注释 true：是 ： false:否 -->
+            <property name="addRemarkComments" value="false"/>
+        </commentGenerator>
+        <!-- 数据库链接URL、用户名、密码 -->
+        <jdbcConnection driverClass="${database.driver}"
+                        connectionURL="${url}"
+                        userId="${username}" password="${password}">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- 生成模型的包名和位置 -->
+        <javaModelGenerator targetPackage="${package.base}.entity" targetProject="${path.java}">
+            <!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 是否针对string类型的字段在set的时候进行trim调用 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- 生成的映射文件包名和位置 -->
+        <sqlMapGenerator targetPackage="${package.xml}" targetProject="${path.xml}">
+            <!-- 同上-->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+        <!-- 生成DAO的包名和位置 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="${package.base}.dao" targetProject="${path.java}">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+        <table tableName="${table.name}" domainObjectName="${domain.name}" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"
+        >
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="${table.primarykey}" sqlStatement="JDBC" identity="true" type="post"/>
+            <!-- schema即为数据库名 tableName为对应的数据库表 domainObjectName是要生成的实体类 enable*ByExample
+                是否生成 example类   -->
+            <!-- 忽略列，不生成bean 字段 -->
+            <!--<ignoreColumn column="FRED"/>-->
+            <!-- 指定列的java数据类型 -->
+            <!--<columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR"/>-->
+        </table>
+    </context>
+</generatorConfiguration>
